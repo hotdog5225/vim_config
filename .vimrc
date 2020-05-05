@@ -20,7 +20,7 @@ set fileencodings=utf-8,gb18030
 set termencoding=utf8
 
 set cursorline
-set cursorcolumn
+"set cursorcolumn
 set backspace=indent,start,eol
 set autoindent
 set expandtab
