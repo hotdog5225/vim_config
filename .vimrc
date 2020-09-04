@@ -24,7 +24,9 @@ set cursorline
 set backspace=indent,start,eol
 set autoindent
 set expandtab
-set list
+
+"set list
+"set listchars=eol:$,tab:>-
 
 set wrap
 
@@ -34,7 +36,6 @@ set formatoptions+=ro
 set background=dark
 colorscheme darkblue
 
-set listchars=eol:$,tab:>-
 
 " vim diff
 hi DiffChange ctermfg=black ctermbg=yellow
