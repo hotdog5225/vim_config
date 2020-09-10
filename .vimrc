@@ -1,6 +1,11 @@
 set nocompatible
 
 syntax on
+
+" set show file path
+set laststatus=2
+set statusline+=%F
+
 set hlsearch " highlight the search matches
 set incsearch
 set mouse=c
