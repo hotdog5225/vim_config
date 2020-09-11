@@ -1,14 +1,13 @@
 set nocompatible
 
 syntax on
-
-" set show file path
-set laststatus=2
-set statusline+=%F
-
 set hlsearch " highlight the search matches
 set incsearch
 set mouse=c
+
+" show file path in vim
+set statusline+=%F
+set laststatus=2
 
 set number
 set tags=tags;
@@ -95,5 +94,21 @@ endfunction
 
 " normal map to \m1
 nnoremap <silent> <leader>m1 :call AppendModeline()<CR>
+
+
+" vim-plug for plug auto install
+" https://github.com/junegunn/vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+Plug 'pearofducks/ansible-vim'
+call plug#end()
+
+let g:ansible_attribute_highlight = "ob"
+let g:ansible_name_highlight = 'd'
 
 " vim: set ts=4 sw=4 sts=4 tw=100 et:
