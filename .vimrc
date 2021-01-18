@@ -1,9 +1,16 @@
-set nocompatible
-
+" 语法高亮
+syntax enable
 syntax on
+
+" 配色方案
+"colorscheme molokai
+colorscheme solarized
+
+" 搜索相关
 set hlsearch " highlight the search matches
-set incsearch
+set incsearch " 部分匹配
 set mouse=c
+set ic " Ignore Case
 
 " show file path in vim
 set statusline+=%F
@@ -55,8 +62,8 @@ let g:indentLine_char = '|'
 runtime macros/matchit.vim
 
 " map
-nmap <leader>t  :%s/\t/    /g<CR>
-
+" tab -> four spaces
+nmap <leader>t  :%s/\t/    /g<CR> 
 nmap <F3> :NERDTreeToggle<CR>
 nmap <F4> :TlistToggle<CR>
 
@@ -104,11 +111,44 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin()
-Plug 'pearofducks/ansible-vim'
+" vim-plug
+call plug#begin('~/.vim/plugged')
+" pearofducks/ansible-vim : syntax plugin for Ansible 2.x
+Plug 'pearofducks/ansible-vim' 
+"fuzzy finder
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+" vim-go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
+" for ansible-vim
 let g:ansible_attribute_highlight = "ob"
 let g:ansible_name_highlight = 'd'
 
+" for LeaderF
+let g:Lf_ShortcutF = '<c-p>'
+let g:Lf_ShortcutB = '<c-l>'
+let g:Lf_StlColorscheme = 'molokai'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_WindowHeight = 0.30
+let g:Lf_WorkingDirectoryMode = 'AF'
+let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
+let g:Lf_DefaultExternalTool='rg'
+let g:Lf_PreviewResult = {
+        \ 'File': 0,
+        \ 'Buffer': 1,
+        \ 'Mru': 1,
+        \ 'Tag': 0,
+        \ 'BufTag': 1,
+        \ 'Function': 1,
+        \ 'Line': 1,
+        \ 'Colorscheme': 0,
+        \ 'Rg': 0,
+        \ 'Gtags': 0
+        \}
+noremap <leader>f :LeaderfSelf<cr>
+
+
+
 " vim: set ts=4 sw=4 sts=4 tw=100 et:
+" vim: set ts=4 sw=4 sts=4 tw=100 foldmethod=marker et: 
