@@ -1,12 +1,22 @@
+set nocompatible " Use VIM settings rather than Vi settings; this *must* be
+                " first in .vimrc 
+
+
+" 设置 vimrc 修改保存后立刻生效，不用在重新打开
+" " 建议配置完成后将这个关闭
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+" 配色方案
+set background=dark " 指定dark light, 在语法高亮之前
+"colorscheme molokai
+"colorscheme solarized
+"colorscheme darkblue
+colorscheme gruvbox
+
 " 语法高亮
 syntax enable
 syntax on
-
-let mapleader = ","
-
-" 配色方案
-"colorscheme molokai
-colorscheme solarized
+filetype plugin indent on    " 开启文件类型检测, 缩进格式
 
 " 搜索相关
 set hlsearch " highlight the search matches
@@ -14,81 +24,73 @@ set incsearch " 部分匹配
 set mouse=c
 set ic " Ignore Case
 
+set nu " 显示行号
+set cursorline
+"set cursorcolumn
+set showmatch " 显示括号匹配
+
+" tab 缩进
+set expandtab " insert space characters whenever the tab key is pressed; C + V + <Tab> 插入真是tab
+set tabstop=4 " 设置tab长度为4
+set shiftwidth=4 " 自动缩进的长度为4的空格
+set autoindent " 继承上一行的缩进方式, 用于多行注释
+set softtabstop=4 " case <Tab> and <BS> to insert correct number of spaces
+set smarttab " 缩进:shiftwidth, 其他地方使用tabstop和softtabstop; <BS>在一行开头, 删除shiftwidth个空白字符
+
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";" 
+ 
+" statusline 设置
 " show file path in vim
-set statusline+=%F
+set statusline+=%F " %F 完整文件路径
 set laststatus=2
 
-set number
-set tags=tags;
-set autochdir
+" ctags 设置
+"set tags=tags;
 
-set smarttab
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
+set autochdir " 自动切换当前目录为当前文件所在的目录
+
 "set textwidth=100 "设置超过100个字符，自动折行
-set sidescroll=10
 set encoding=utf8
 set fileencodings=utf-8,gb18030
 set termencoding=utf8
 
-set cursorline
-"set cursorcolumn
 set backspace=indent,start,eol
-set autoindent
-set expandtab
 
 "set list
 "set listchars=eol:$,tab:>-
 
-set wrap
+set wrap " 超出屏幕范围的文本折行显示
+set sidescroll=10 " 设置横向滑动的粒度
 
-set formatoptions+=ro
-
-" color scheme
-set background=dark
-colorscheme darkblue
-
+set formatoptions+=ro " 注释行后, 自动添加注释行 -=ro 关闭
 
 " vim diff
 hi DiffChange ctermfg=black ctermbg=yellow
 hi cursorcolumn cterm=NONE ctermbg=grey
 
-filetype plugin on
-filetype indent on
-
+" 缩进指示线 indentLine
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 239
 let g:indentLine_char = '|'
 
-runtime macros/matchit.vim
+" runtime macros/matchit.vim " html标签成对跳转
 
 " map
 " tab -> four spaces
+" 百分号（%）表示所有行
 nmap <leader>t  :%s/\t/    /g<CR> 
 nmap <F3> :NERDTreeToggle<CR>
 nmap <F4> :TlistToggle<CR>
 
-nmap <F5> :w<CR>:make %<CR>
-
-nmap <F9>  :cprev<CR>
-nmap <F10> :cnext<CR>
-
 nmap <F11> :previous<CR>
 nmap <F12> :next<CR>
-
-nmap <UP> gk
-nmap <DOWN> gj
-nmap <LEFT> 10zh
-nmap <RIGHT> 10zl
-
-" inoremap jk <Esc>
 
 " auto load view when open the file
 auto BufWinEnter * silent loadview
 
 " let g:neocomplcache_enable_at_startup=1
-let g:SuperTabDefaultCompletionType="context"
+"let g:SuperTabDefaultCompletionType="context"
 
 " make Tlist show on right
 let Tlist_Use_Right_Window = 1
@@ -150,20 +152,6 @@ let g:Lf_PreviewResult = {
         \}
 noremap <leader>f :LeaderfSelf<cr>
 
-" vim-go
-nnoremap <c-]> :GoDef<cr>
-nnoremap <c-t> :GoDefPop<cr>
-" https://github.com/fatih/vim-go/issues/2760
-let g:go_gopls_enabled = 1
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-let g:go_referrers_mode = 'gopls'
-" disable vim-go :GoDef short cut (gd)
-" this is handled by LanguageClient [LC]
-let g:go_def_mapping_enabled = 1
-
-" import on save
-let g:go_fmt_command = "goimports"
 
 
 " vim: set ts=4 sw=4 sts=4 tw=100 et:
