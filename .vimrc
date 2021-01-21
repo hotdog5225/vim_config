@@ -151,6 +151,7 @@ let g:Lf_PreviewResult = {
         \ 'Gtags': 0
         \}
 noremap <leader>f :LeaderfSelf<cr>
+noremap gd :GoDef<CR>
 
 
 
