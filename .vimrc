@@ -2,6 +2,8 @@
 syntax enable
 syntax on
 
+let mapleader = ","
+
 " 配色方案
 "colorscheme molokai
 colorscheme solarized
@@ -148,6 +150,20 @@ let g:Lf_PreviewResult = {
         \}
 noremap <leader>f :LeaderfSelf<cr>
 
+" vim-go
+nnoremap <c-]> :GoDef<cr>
+nnoremap <c-t> :GoDefPop<cr>
+" https://github.com/fatih/vim-go/issues/2760
+let g:go_gopls_enabled = 1
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+let g:go_referrers_mode = 'gopls'
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 1
+
+" import on save
+let g:go_fmt_command = "goimports"
 
 
 " vim: set ts=4 sw=4 sts=4 tw=100 et:
