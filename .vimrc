@@ -5,7 +5,33 @@ set nocompatible " Use VIM settings rather than Vi settings; this *must* be
 " " 建议配置完成后将这个关闭
 " autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
+" ======================== 
+" 代码缩进 za，打开或关闭当前折叠；zM，关闭所有折叠；zR，打开所有折叠
+" ======================== 
+" 基于缩进或语法进行代码折叠
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";" 
+
+" ======================== 
+" 窗格配置
+" ======================== 
+" 跳转至右方的窗口
+nnoremap <Leader>lw <C-W>l
+" 跳转至左方的窗口
+nnoremap <Leader>hw <C-W>h
+" 跳转至上方的子窗口
+nnoremap <Leader>kw <C-W>k
+" 跳转至下方的子窗口
+nnoremap <Leader>jw <C-W>j
+
+" ======================== 
 " 配色方案
+" ======================== 
 set background=dark " 指定dark light, 在语法高亮之前
 "colorscheme molokai
 "colorscheme solarized
@@ -36,7 +62,7 @@ filetype plugin indent on    " 开启文件类型检测, 缩进格式
 " 搜索相关
 set hlsearch " highlight the search matches
 set incsearch " 部分匹配
-set mouse=c
+set mouse=a
 set ic " Ignore Case
 
 set nu " 显示行号
@@ -52,13 +78,6 @@ set autoindent " 继承上一行的缩进方式, 用于多行注释
 set softtabstop=4 " case <Tab> and <BS> to insert correct number of spaces
 set smarttab " 缩进:shiftwidth, 其他地方使用tabstop和softtabstop; <BS>在一行开头, 删除shiftwidth个空白字符
 
-" 定义快捷键的前缀，即<Leader>
-let mapleader="," 
- 
-" statusline 设置
-" show file path in vim
-"set statusline+=%F " %F 完整文件路径
-"set laststatus=2
 
 " ctags 设置
 "set tags=tags;
@@ -76,7 +95,7 @@ set backspace=indent,start,eol " make the backspace work
 set wrap " 超出屏幕范围的文本折行显示
 set sidescroll=10 " 设置横向滑动的粒度
 
-set formatoptions+=ro " 注释行后, 自动添加注释行 -=ro 关闭
+set formatoptions-=ro " 注释行后, 自动添加注释行 +=ro 开启
 
 " vim diff
 hi DiffChange ctermfg=black ctermbg=yellow
@@ -97,9 +116,6 @@ nmap <leader>t  :%s/\t/    /g<CR>
 nmap <F11> :previous<CR>
 nmap <F12> :next<CR>
 
-" make Tlist show on right
-let Tlist_Use_Right_Window = 1
-
 " insert the modeline
 function! AppendModeline()
     let l:modeline=printf(" vim: set ts=%d sw=%d sts=%d tw=%d foldmethod=marker %s: ",
@@ -111,16 +127,9 @@ endfunction
 " normal map to \m1
 nnoremap <silent> <leader>m1 :call AppendModeline()<CR>
 
-
-" vim-plug for plug auto install
-" https://github.com/junegunn/vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
+" ======================== 
 " vim-plug
+" ======================== 
 call plug#begin('~/.vim/plugged')
 " 快速对齐插件
 Plug 'junegunn/vim-easy-align'
@@ -128,8 +137,14 @@ Plug 'junegunn/vim-easy-align'
 Plug 'pearofducks/ansible-vim' 
 "fuzzy finder
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+" LSP language Server Protocol
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " vim-go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" vim-airline
+Plug 'vim-airline/vim-airline'
+" vim-bookmark
+Plug 'MattesGroeger/vim-bookmarks'
 
 Plug 'preservim/nerdtree'
 
@@ -137,7 +152,6 @@ Plug 'solarnz/thrift.vim'
 
 Plug 'jiangmiao/auto-pairs'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " for ansible-vim
@@ -169,15 +183,12 @@ noremap <leader>f :LeaderfSelf<cr>
 
 " for vim-go
 " https://github.com/fatih/vim-go/issues/2760
-let g:go_gopls_enabled = 1
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
+let g:go_gopls_enabled = 1 " go LSP "go please"
+let g:go_def_mode='gopls' " :GoDef use gopls
+let g:go_info_mode='gopls' " :GoDef use gopls
 let g:go_referrers_mode = 'gopls'
 " import on save
 let g:go_fmt_command = "goimports"
-" disable vim-go :GoDef short cut (gd)
-" this is handled by LanguageClient [LC]
-let g:go_def_mapping_enabled = 0
 
 " for nerdtree
 " Exit Vim if NERDTree is the only window left.
@@ -185,9 +196,9 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
     \ quit | endif
 
 " -------------------------------------------------------------------------------------------------
-" coc.nvim default settings
+" coc.nvim default settings : LSP
 " -------------------------------------------------------------------------------------------------
-let g:coc_node_path = '/usr/local/bin/node' " 设置node的路径
+
 " if hidden is not set, TextEdit might fail.
 set hidden
 " Better display for messages
@@ -251,6 +262,16 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
+
+" statusline 设置
+" show file path in vim
+" set statusline+=%F " %F 完整文件路径
+set laststatus=2
+
 
 " vim: set ts=4 sw=4 sts=4 tw=100 et:
+" vim: set ts=4 sw=4 sts=4 tw=100 foldmethod=marker et: 
 " vim: set ts=4 sw=4 sts=4 tw=100 foldmethod=marker et: 
