@@ -12,6 +12,22 @@ set background=dark " 指定dark light, 在语法高亮之前
 "colorscheme darkblue
 colorscheme gruvbox
 
+" ======================================
+" 编辑相关配置
+" ======================================
+" 不创建交换文件。交换文件主要用于系统崩溃时恢复文件，文件名的开头是.、结尾是.swp
+set noswapfile
+" 自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况，默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到，正在编辑的文件的目录。
+set autochdir
+" 出错时，不要发出响声
+set noerrorbells
+" 出错时，发出视觉提示，通常是屏幕闪烁
+set visualbell
+" 打开文件监视。如果在编辑过程中文件发生外部改变，就会发出提示。
+set autoread
+" 命令模式下，底部操作指令按下 Tab 键自动补全
+set wildmenu
+
 " 语法高亮
 syntax enable
 syntax on
@@ -46,8 +62,6 @@ let mapleader=","
 
 " ctags 设置
 "set tags=tags;
-
-set autochdir " 自动切换当前目录为当前文件所在的目录
 
 "set textwidth=100 "设置超过100个字符，自动折行
 set encoding=utf8
@@ -173,7 +187,7 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
-
+let g:coc_node_path = '/usr/local/bin/node' " 设置node的路径
 " if hidden is not set, TextEdit might fail.
 set hidden
 " Better display for messages
