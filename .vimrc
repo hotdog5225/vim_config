@@ -1,10 +1,9 @@
 set nocompatible " Use VIM settings rather than Vi settings; this *must* be
                 " first in .vimrc 
 
-
 " 设置 vimrc 修改保存后立刻生效，不用在重新打开
 " " 建议配置完成后将这个关闭
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " 配色方案
 set background=dark " 指定dark light, 在语法高亮之前
@@ -38,12 +37,12 @@ set softtabstop=4 " case <Tab> and <BS> to insert correct number of spaces
 set smarttab " 缩进:shiftwidth, 其他地方使用tabstop和softtabstop; <BS>在一行开头, 删除shiftwidth个空白字符
 
 " 定义快捷键的前缀，即<Leader>
-let mapleader=";" 
+let mapleader="," 
  
 " statusline 设置
 " show file path in vim
-set statusline+=%F " %F 完整文件路径
-set laststatus=2
+"set statusline+=%F " %F 完整文件路径
+"set laststatus=2
 
 " ctags 设置
 "set tags=tags;
@@ -55,7 +54,7 @@ set encoding=utf8
 set fileencodings=utf-8,gb18030
 set termencoding=utf8
 
-set backspace=indent,start,eol
+set backspace=indent,start,eol " make the backspace work 
 
 "set list
 "set listchars=eol:$,tab:>-
@@ -80,17 +79,9 @@ let g:indentLine_char = '|'
 " tab -> four spaces
 " 百分号（%）表示所有行
 nmap <leader>t  :%s/\t/    /g<CR> 
-nmap <F3> :NERDTreeToggle<CR>
-nmap <F4> :TlistToggle<CR>
 
 nmap <F11> :previous<CR>
 nmap <F12> :next<CR>
-
-" auto load view when open the file
-auto BufWinEnter * silent loadview
-
-" let g:neocomplcache_enable_at_startup=1
-"let g:SuperTabDefaultCompletionType="context"
 
 " make Tlist show on right
 let Tlist_Use_Right_Window = 1
@@ -117,12 +108,22 @@ endif
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
+" 快速对齐插件
+Plug 'junegunn/vim-easy-align'
 " pearofducks/ansible-vim : syntax plugin for Ansible 2.x
 Plug 'pearofducks/ansible-vim' 
 "fuzzy finder
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 " vim-go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'preservim/nerdtree'
+
+Plug 'solarnz/thrift.vim'
+
+Plug 'jiangmiao/auto-pairs'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " for ansible-vim
@@ -151,8 +152,90 @@ let g:Lf_PreviewResult = {
         \ 'Gtags': 0
         \}
 noremap <leader>f :LeaderfSelf<cr>
-noremap gd :GoDef<CR>
 
+" for vim-go
+" https://github.com/fatih/vim-go/issues/2760
+let g:go_gopls_enabled = 1
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+let g:go_referrers_mode = 'gopls'
+" import on save
+let g:go_fmt_command = "goimports"
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
+
+" for nerdtree
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
+" -------------------------------------------------------------------------------------------------
+" coc.nvim default settings
+" -------------------------------------------------------------------------------------------------
+
+" if hidden is not set, TextEdit might fail.
+set hidden
+" Better display for messages
+set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use U to show documentation in preview window
+nnoremap <silent> U :call <SID>show_documentation()<CR>
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
 " vim: set ts=4 sw=4 sts=4 tw=100 et:
