@@ -129,6 +129,11 @@ call plug#begin("~/.config/nvim/plugged")
     "Plug 'sheerun/vim-polyglot'
     " Code comment
     Plug 'preservim/nerdcommenter'
+    " vim-airline
+    Plug 'vim-airline/vim-airline'
+    " thrift
+    Plug 'solarnz/thrift.vim'
+    Plug 'jiangmiao/auto-pairs'
 
 
 call plug#end()
@@ -247,6 +252,9 @@ let g:go_info_mode='gopls' " :GoDef use gopls
 let g:go_referrers_mode = 'gopls'
 " import on save
 let g:go_fmt_command = "goimports"
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
 
 " for code comment
 " Nerd Commenter
