@@ -134,6 +134,8 @@ call plug#begin("~/.config/nvim/plugged")
     " thrift
     Plug 'solarnz/thrift.vim'
     Plug 'jiangmiao/auto-pairs'
+    "indentLine
+    Plug 'Yggdroot/indentLine'
 
 
 call plug#end()
