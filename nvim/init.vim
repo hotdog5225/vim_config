@@ -136,6 +136,8 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'jiangmiao/auto-pairs'
     "indentLine
     Plug 'Yggdroot/indentLine'
+    " rainbow 
+    Plug 'luochen1990/rainbow'
 
 
 call plug#end()
@@ -203,6 +205,8 @@ let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red
 let g:WebDevIconsDefaultFolderSymbolColor = s:beige 
 " " Sets the color for files that did not match any rule
 let g:WebDevIconsDefaultFileSymbolColor = s:blue 
+
+nnoremap <F3> :NERDTreeToggle<CR> " 开启/关闭nerdtree快捷键
 
 " NERDTree Git Plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -274,6 +278,31 @@ let g:NERDSpaceDelims = 1
 " " to bind Ctmd+/ to ++
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
+
+" rainbow
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+\   'guifgs': ['darkorange3', 'seagreen3', 'royalblue3', 'firebrick'],
+\   'ctermfgs': ['lightyellow', 'lightcyan','lightblue', 'lightmagenta'],
+\   'operators': '_,_',
+\   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\   'separately': {
+\       '*': {},
+\       'tex': {
+\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+\       },
+\       'lisp': {
+\           'guifgs': ['darkorange3', 'seagreen3', 'royalblue3', 'firebrick'],
+\       },
+\       'vim': {
+\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+\       },
+\       'html': {
+\           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+\       },
+\       'css': 0,
+\   }
+\}
 
 
 " ====================  plug config end =================================
