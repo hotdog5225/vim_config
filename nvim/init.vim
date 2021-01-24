@@ -12,7 +12,7 @@ nnoremap <leader>v <C-w>v
 nnoremap <leader>s <C-w>s
 
 " " Map yanked to clipboard
-vnoremap <C-c> "*y
+vnoremap <D-c> "*y
 
 syntax enable " enable syntax highglighting
 syntax on " turn on syntax highlighting
@@ -160,6 +160,7 @@ let g:NERDTreeIgnore = ['^node_modules$'] " ignore node_modules to increase load
 let g:NERDTreeStatusline = '' " set to empty to use lightline
 " " Toggle
 noremap <silent> <C-b> :NERDTreeToggle<CR>
+nnoremap <F3> :NERDTreeToggle<CR> " 开启/关闭nerdtree快捷键
 " " Close window if NERDTree is the last one
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " " Map to open current file in NERDTree and set size
@@ -206,7 +207,6 @@ let g:WebDevIconsDefaultFolderSymbolColor = s:beige
 " " Sets the color for files that did not match any rule
 let g:WebDevIconsDefaultFileSymbolColor = s:blue 
 
-nnoremap <F3> :NERDTreeToggle<CR> " 开启/关闭nerdtree快捷键
 
 " NERDTree Git Plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
