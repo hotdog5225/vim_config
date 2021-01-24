@@ -90,6 +90,12 @@ set wrap " 超出屏幕范围的文本折行显示
 " 百分号（%）表示所有行
 nmap <leader>t  :%s/\t/    /g<CR>
 
+" copy paste
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+
 
 " ==================== common config end ==============================
 
