@@ -1,6 +1,13 @@
 set nocompatible " Use VIM settings rather than Vi settings; this *must* be
                 " first in .vimrc 
 
+" copy paste
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+
+
 " 设置 vimrc 修改保存后立刻生效，不用在重新打开
 " " 建议配置完成后将这个关闭
 " autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -141,7 +148,7 @@ Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " vim-go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" vim-airline
+" vim-airline statusline
 Plug 'vim-airline/vim-airline'
 " vim-bookmark
 Plug 'MattesGroeger/vim-bookmarks'
