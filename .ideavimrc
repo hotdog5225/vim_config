@@ -1,0 +1,153 @@
+set nocompatible " Use VIM settings rather than Vi settings; this *must* be first in .vimrc
+
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";"
+
+" 搜索相关
+set hlsearch " highlight the search matches
+set incsearch " 部分匹配
+set mouse=a
+set ic " Ignore Case
+
+set nu " 显示行号
+set cursorline
+"set cursorcolumn
+set showmatch " 显示括号匹配
+
+" ======================================
+" 编辑相关配置
+" ======================================
+" 不创建交换文件。交换文件主要用于系统崩溃时恢复文件，文件名的开头是.、结尾是.swp
+set noswapfile
+set noundofile
+set nobackup
+" 自动切换工作目录。这主要用在一个 Vim 会话之中打开多个文件的情况，默认的工作目录是打开的第一个文件的目录。该配置可以将工作目录自动切换到，正在编>  辑的文件的目录。
+set autochdir
+" 出错时，不要发出响声
+set noerrorbells
+" 出错时，发出视觉提示，通常是屏幕闪烁
+set visualbell
+" 打开文件监视。如果在编辑过程中文件发生外部改变，就会发出提示。
+set autoread
+" 命令模式下，底部操作指令按下 Tab 键自动补全
+set wildmenu
+
+" disable window search style
+" nnoremap <C-f> /
+" inoremap <C-f> <ESC>/
+" vnoremap <C-f> <ESC>/<C-r><C-w>
+" " command mode
+" cnoremap <C-f> <C-r><C-w>
+
+" ==================================================
+" Show all the provided actions via `:actionlist`
+" ==================================================
+" back
+nnoremap <C-o> :action Back<CR>
+nnoremap <leader>gb :action Back<CR>
+" forward
+nnoremap <leader>fw :action Forward<CR>
+
+" <C-A-L>
+nnoremap <leader>fm :action ReformatCode<CR>
+inoremap <leader>fm <ESC>:action ReformatCode<CR>a
+"nnoremap <C-A-l> :action ReformatCode<CR>
+"inoremap <C-A-l> <ESC>:action ReformatCode<CR>a
+
+" as mouse clicked
+nnoremap <leader>gd :action GotoDeclaration<CR>
+inoremap <leader>gd <ESC>:action GotoDeclaration<CR>
+" mean going to see the real implementation,aka method
+nnoremap <Leader>gi :action GotoImplementation<CR>
+
+nnoremap <Leader>su :action ShowUsages<CR>
+"nnoremap <Leader>fu :action FindUsages<CR>
+" open CodeCompletion
+nnoremap <Leader><space> a<space><ESC>:action CodeCompletion<CR>
+inoremap <Leader><space> <space><ESC>:action CodeCompletion<CR>
+" <C-R>
+nnoremap <C-r> :action $Redo<CR>
+
+nnoremap <Leader>w :action SaveDocument<CR>
+
+" built in search looks better
+map <C-f> <ESC>:action Find<CR>
+" copy
+" vnoremap <C-c> :action $Copy<CR>
+" paste
+" nnoremap <C-v> :action $Paste<CR>
+"inoremap <C-v> <C-o>:action $Paste<CR>
+" vnoremap <C-v> "_d:action $Paste<CR>
+" cut
+" vnoremap <C-x> "+d
+" nnoremap <C-x> :action $Cut<CR>
+" <C-N>
+" nnoremap <C-n> :action GotoClass<CR>
+" inoremap <C-n> <ESC>:action GotoClass<CR>
+nnoremap <leader>gc :action GotoClass<CR>
+inoremap <leader>gc <ESC>:action GotoClass<CR>
+" <C-e>
+nnoremap <leader>cf :action RecentFiles<CR>
+" <C-S-N>
+nnoremap <C-S-n> :action GotoFile<CR>
+inoremap <C-S-n> <ESC>:action GotoFile<CR>
+
+" <C-o>
+"nnoremap <C-o> :action OverrideMethods<CR>
+" <C-F12>
+nnoremap <leader>ss :action FileStructurePopup<CR>
+" <C-P>
+" nnoremap <C-P> :action ParameterInfo<CR>
+" inoremap <C-P> <ESC>:action ParameterInfo<CR>a
+" <C-Q>
+nnoremap <C-q> :action QuickJavaDoc<CR>
+
+" <C-H> Hierarchy Class
+nnoremap <C-H> :action TypeHierarchy<CR>
+" <C-S-H> Hierarchy Method
+nnoremap <C-S-H> :action MethodHierarchy<CR>
+nnoremap <leader>hm :action MethodHierarchy<CR>
+
+
+nnoremap <Leader>oi :action OptimizeImports<CR>
+nnoremap <space>oi :action OptimizeImports<CR>
+
+" comment
+nnoremap <Leader>cc :action CommentByLineComment<CR>
+vnoremap <Leader>cc :action CommentByLineComment<CR>
+" pretend :) uncomment
+nnoremap <Leader>cu :action CommentByLineComment<CR>
+vnoremap <Leader>cu :action CommentByLineComment<CR>
+
+nnoremap <Leader>br :action ToggleLineBreakpoint<CR>
+" see all breakpoints
+nnoremap <Leader>abr :action ViewBreakpoints<CR>
+
+nnoremap <Leader>fs :action ToggleFullScreen<CR>
+
+nnoremap <leader>sew :action SearchEverywhere<CR>
+
+nnoremap <Leader>cmd :action ChooseRunConfiguration<CR>
+
+nnoremap <Leader>sel :action ActivateTerminalToolWindow<CR>
+" <C-S-F<F4>> close windows just popup
+nnoremap <leader>cw :action CloseActiveTab<CR>
+" <C-j>
+inoremap <C-j> <ESC>:action InsertLiveTemplate<CR>
+
+
+
+
+
+" ==================================================
+" Emulated Vim Plugins
+" ==================================================
+set surround
+
+" 屏幕滚动时在光标上下方保留5行预览代码
+set so=5
