@@ -8,6 +8,12 @@ set nofoldenable
 " 定义快捷键的前缀，即<Leader>
 let mapleader=";"
 
+" copy paste
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+
 " 搜索相关
 set hlsearch " highlight the search matches
 set incsearch " 部分匹配
@@ -51,6 +57,7 @@ set wildmenu
 nnoremap <C-o> :action Back<CR>
 nnoremap <leader>gb :action Back<CR>
 " forward
+nnoremap <C-i> :action Forward<CR>
 nnoremap <leader>fw :action Forward<CR>
 
 " <C-A-L>
@@ -60,12 +67,12 @@ inoremap <leader>fm <ESC>:action ReformatCode<CR>a
 "inoremap <C-A-l> <ESC>:action ReformatCode<CR>a
 
 " as mouse clicked
-nnoremap <leader>gd :action GotoDeclaration<CR>
+nnoremap gd :action GotoDeclaration<CR>
 inoremap <leader>gd <ESC>:action GotoDeclaration<CR>
 " mean going to see the real implementation,aka method
-nnoremap <Leader>gi :action GotoImplementation<CR>
+nnoremap gi :action GotoImplementation<CR>
 
-nnoremap <Leader>su :action ShowUsages<CR>
+nnoremap su :action ShowUsages<CR>
 "nnoremap <Leader>fu :action FindUsages<CR>
 " open CodeCompletion
 nnoremap <Leader><space> a<space><ESC>:action CodeCompletion<CR>

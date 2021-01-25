@@ -2,11 +2,15 @@
 
 set nocompatible " Use VIM settings rather than Vi settings; this *must* be first in .vimrc
 
-" " Panel switching
-map <leader>h :wincmd h<CR>
-map <leader>j :wincmd j<CR>
-map <leader>k :wincmd k<CR>
-map <leader>l :wincmd l<CR>
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";"
+
+" " Panel switching 窗口跳转
+" vim 窗口配置
+nnoremap <leader>h :wincmd h<cr>
+nnoremap <leader>j :wincmd j<cr>
+nnoremap <leader>k :wincmd k<cr>
+nnoremap <leader>l :wincmd l<cr>
 " " Split panel
 nnoremap <leader>v <C-w>v
 nnoremap <leader>s <C-w>s
@@ -16,7 +20,6 @@ nnoremap <leader>s <C-w>s
 vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
-
 
 syntax enable " enable syntax highglighting
 syntax on " turn on syntax highlighting
@@ -33,19 +36,6 @@ syntax on " turn on syntax highlighting
 set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
-
-" 定义快捷键的前缀，即<Leader>
-let mapleader=";"
-
-" 窗格配置
-" 跳转至右方的窗口
-" nnoremap <Leader>lw <C-W>l
-" 跳转至左方的窗口
-" nnoremap <Leader>hw <C-W>h
-" 跳转至上方的子窗口
-" nnoremap <Leader>kw <C-W>k
-" 跳转至下方的子窗口
-" nnoremap <Leader>jw <C-W>j
 
 " 编辑相关配置
 " 不创建交换文件。交换文件主要用于系统崩溃时恢复文件，文件名的开头是.、结尾是.swp
@@ -87,7 +77,7 @@ set termencoding=utf8
 
 set backspace=indent,start,eol " make the backspace work
 
-set formatoptions-=ro " 注释行后, 自动添加注释行 +=ro 开启
+set formatoptions-=cro " 注释行后, 自动添加注释行 +=ro 开启
 set wrap " 超出屏幕范围的文本折行显示
 
 " tab -> four spaces
@@ -110,7 +100,7 @@ let g:python3_host_prog = '/usr/local/Cellar/python@3.8/3.8.5/bin/python3'
 let g:python_host_prog  = '/usr/bin/python2'
 " disable provider
 " To disable Python 2 support:
- "let g:loaded_python_provider = 0
+"let g:loaded_python_provider = 0
 "To disable Python 3 support:
 "let g:loaded_python3_provider = 0
 
@@ -143,14 +133,19 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'vim-airline/vim-airline'
     " thrift
     Plug 'solarnz/thrift.vim'
-    Plug 'jiangmiao/auto-pairs'
+    " protobuf
+    " Plug 'uarun/vim-protobuf'
+    " Plug 'jiangmiao/auto-pairs'
     "indentLine
-    Plug 'Yggdroot/indentLine'
+    " Plug 'Yggdroot/indentLine'
     " rainbow 
     Plug 'luochen1990/rainbow'
+    " 代码片段提示
+    Plug 'honza/vim-snippets'
+    " LSP 加载
+    Plug 'sheerun/vim-polyglot'
 
-
-call plug#end()
+    call plug#end()
 
 " ====================  plug end =================================
 
@@ -164,9 +159,9 @@ colorscheme gruvbox
 
 " file explorer
 " NERDTree
-let g:NERDTreeShowHidden = 1 
+let g:NERDTreeShowHidden = 1  " 显示隐藏文件
 let g:NERDTreeMinimalUI = 1 " hide helper
-let g:NERDTreeIgnore = ['^node_modules$'] " ignore node_modules to increase load speed 
+let g:NERDTreeIgnore = ['^node_modules$', '\.git', '\.idea'] " files/dirs to be ignored
 let g:NERDTreeStatusline = '' " set to empty to use lightline
 " " Toggle
 noremap <silent> <C-b> :NERDTreeToggle<CR>
@@ -247,7 +242,7 @@ let g:Lf_WorkingDirectoryMode = 'AF'
 let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
 let g:Lf_DefaultExternalTool='rg'
 let g:Lf_PreviewResult = {
-        \ 'File': 0,
+        \ 'File': 1,
         \ 'Buffer': 1,
         \ 'Mru': 1,
         \ 'Tag': 0,
@@ -255,7 +250,7 @@ let g:Lf_PreviewResult = {
         \ 'Function': 1,
         \ 'Line': 1,
         \ 'Colorscheme': 0,
-        \ 'Rg': 0,
+        \ 'Rg': 1,
         \ 'Gtags': 0
         \}
 noremap <leader>f :LeaderfSelf<cr>
@@ -286,8 +281,8 @@ let g:NERDToggleCheckAllLines = 1
 let g:NERDSpaceDelims = 1
 " " Map ++ to call NERD Commenter and use iTerm key bindings 
 " " to bind Ctmd+/ to ++
-vmap ++ <plug>NERDCommenterToggle
-nmap ++ <plug>NERDCommenterToggle
+vnoremap ++ <plug>NERDCommenterToggle
+nnoremap ++ <plug>NERDCommenterToggle
 
 " rainbow
 let g:rainbow_active = 1
@@ -315,10 +310,15 @@ let g:rainbow_conf = {
 \}
 
 " for coc-nvim
-" -------------------------------------------------------------------------------------------------
-" coc.nvim default settings : LSP
-" -------------------------------------------------------------------------------------------------
-
+" 默认要安装的coc插件
+let g:coc_global_extensions = [
+    \ 'coc-tsserver',
+    \ 'coc-json', 
+    \ 'coc-marketplace',
+    \ 'coc-vimlsp',
+    \ 'coc-snippets',
+    \ 'coc-protobuf',
+    \ 'coc-go']
 " if hidden is not set, TextEdit might fail.
 set hidden
 " Better display for messages
@@ -346,6 +346,13 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
@@ -363,13 +370,9 @@ nnoremap <silent> U :call <SID>show_documentation()<CR>
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+"vmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
 " Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
@@ -381,7 +384,6 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
 
 " ====================  plug config end =================================
 
