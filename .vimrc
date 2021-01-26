@@ -194,7 +194,7 @@ call plug#begin("~/.config/nvim/plugged")
 " ====================  plug end =================================
 
 " ====================  plug config start =================================
-" gruvbox
+" for gruvbox
 if (has("termguicolors"))
      set termguicolors
 endif
@@ -202,7 +202,7 @@ set background=dark
 colorscheme gruvbox
 
 " file explorer
-" NERDTree
+" for NERDTree
 let g:NERDTreeShowHidden = 1  " 显示隐藏文件
 let g:NERDTreeMinimalUI = 1 " hide helper
 let g:NERDTreeIgnore = ['^node_modules$', '\.git', '\.idea'] " files/dirs to be ignored
@@ -255,6 +255,8 @@ let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red
 let g:WebDevIconsDefaultFolderSymbolColor = s:beige 
 " " Sets the color for files that did not match any rule
 let g:WebDevIconsDefaultFileSymbolColor = s:blue 
+" auro change directory
+let g:NERDTreeChDirMode = 2 
 
 
 " NERDTree Git Plugin
