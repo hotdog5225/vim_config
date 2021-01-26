@@ -166,6 +166,8 @@ colorscheme gruvbox
 " file explorer
 " for NERDTree
 autocmd VimEnter * NERDTree
+" focus on main window on launch
+autocmd VimEnter * wincmd p
 let g:NERDTreeShowHidden = 1  " 显示隐藏文件
 let g:NERDTreeMinimalUI = 1 " hide helper
 let g:NERDTreeIgnore = ['^node_modules$', '\.git', '\.idea'] " files/dirs to be ignored
