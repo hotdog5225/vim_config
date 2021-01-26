@@ -261,18 +261,9 @@ let g:Lf_PreviewResult = {
         \ 'Rg': 1,
         \ 'Gtags': 0
         \}
-noremap <leader>f :LeaderfSelf<cr>
+" noremap <leader>f :LeaderfSelf<cr>
 " leaderf rg 
-nnoremap <leader>fr  <Plug>LeaderfRgPrompt 
-nnoremap <leader>fra <Plug>LeaderfRgCwordLiteralNoBoundary
-nnoremap <leader>frb <Plug>LeaderfRgCwordLiteralBoundary
-nnoremap <leader>frc <Plug>LeaderfRgCwordRegexNoBoundary
-nnoremap <leader>frd <Plug>LeaderfRgCwordRegexBoundary
-
-vnoremap <leader>fra <Plug>LeaderfRgVisualLiteralNoBoundary
-vnoremap <leader>frb <Plug>LeaderfRgVisualLiteralBoundary
-vnoremap <leader>frc <Plug>LeaderfRgVisualRegexNoBoundary
-vnoremap <leader>frd <Plug>LeaderfRgVisualRegexBoundary
+nnoremap <leader>fr  :Leaderf rg -e<space>
 
 " for vim-go
 " https://github.com/fatih/vim-go/issues/2760
@@ -362,8 +353,12 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" Use <s-k> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> K coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -382,31 +377,51 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use U to show documentation in preview window
-nnoremap <silent> U :call <SID>show_documentation()<CR>
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-"vmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>f  <Plug>(coc-format-selected)
+" vmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 " Manage extensions
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" jump to placehodler
+let g:coc_snippet_next =  '<space>j'
+let g:coc_snippet_prev =  '<space>k'
 
 
 " gitgutter
 let g:gitgutter_map_keys = 0
+
+" for tagbar
+nmap <F4> :TagbarToggle<CR>
 
 " ===========  plug config end =================================
 
