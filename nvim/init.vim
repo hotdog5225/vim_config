@@ -21,6 +21,7 @@ vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
 
+
 syntax enable " enable syntax highglighting
 syntax on " turn on syntax highlighting
 
@@ -114,10 +115,9 @@ call plug#begin("~/.config/nvim/plugged")
 	" Plug 'pluginOwner/pluginNames' 
 	Plug 'morhetz/gruvbox'
 	" file explorer
-	Plug 'preservim/nerdtree'
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-	Plug 'Xuyuanp/nerdtree-git-plugin' 
-	Plug 'ryanoasis/vim-devicons'
+	Plug 'preservim/nerdtree' | 
+                \ Plug 'Xuyuanp/nerdtree-git-plugin'
+	" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     " file search
     Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
     " vim-go
@@ -143,8 +143,14 @@ call plug#begin("~/.config/nvim/plugged")
     " 代码片段提示
     Plug 'honza/vim-snippets'
     " LSP 加载
-    Plug 'sheerun/vim-polyglot'
+    " Plug 'sheerun/vim-polyglot'
+    " tagbar
+    Plug 'majutsushi/tagbar'
+    " gitgutter
+    Plug 'airblade/vim-gitgutter'
 
+    " always as the last one : font
+    " Plug 'ryanoasis/vim-devicons'
     call plug#end()
 
 " ====================  plug end =================================
@@ -233,16 +239,18 @@ let g:indentLine_color_term = 239
 let g:indentLine_char = '|'
 
 " for LeaderF
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_WindowHeight = 0.30
+
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<c-l>'
 let g:Lf_StlColorscheme = 'molokai'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_WindowHeight = 0.30
 let g:Lf_WorkingDirectoryMode = 'AF'
 let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
 let g:Lf_DefaultExternalTool='rg'
 let g:Lf_PreviewResult = {
-        \ 'File': 1,
+        \ 'File': 0,
         \ 'Buffer': 1,
         \ 'Mru': 1,
         \ 'Tag': 0,
@@ -254,6 +262,17 @@ let g:Lf_PreviewResult = {
         \ 'Gtags': 0
         \}
 noremap <leader>f :LeaderfSelf<cr>
+" leaderf rg 
+nnoremap <leader>fr  <Plug>LeaderfRgPrompt 
+nnoremap <leader>fra <Plug>LeaderfRgCwordLiteralNoBoundary
+nnoremap <leader>frb <Plug>LeaderfRgCwordLiteralBoundary
+nnoremap <leader>frc <Plug>LeaderfRgCwordRegexNoBoundary
+nnoremap <leader>frd <Plug>LeaderfRgCwordRegexBoundary
+
+vnoremap <leader>fra <Plug>LeaderfRgVisualLiteralNoBoundary
+vnoremap <leader>frb <Plug>LeaderfRgVisualLiteralBoundary
+vnoremap <leader>frc <Plug>LeaderfRgVisualRegexNoBoundary
+vnoremap <leader>frd <Plug>LeaderfRgVisualRegexBoundary
 
 " for vim-go
 " https://github.com/fatih/vim-go/issues/2760
@@ -385,5 +404,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-" ====================  plug config end =================================
+
+" gitgutter
+let g:gitgutter_map_keys = 0
+
+" ===========  plug config end =================================
 
