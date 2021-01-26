@@ -203,6 +203,7 @@ colorscheme gruvbox
 
 " file explorer
 " for NERDTree
+autocmd VimEnter * NERDTree
 let g:NERDTreeShowHidden = 1  " 显示隐藏文件
 let g:NERDTreeMinimalUI = 1 " hide helper
 let g:NERDTreeIgnore = ['^node_modules$', '\.git', '\.idea'] " files/dirs to be ignored
@@ -374,7 +375,7 @@ set hidden
 " Better display for messages
 set cmdheight=2
 " Smaller updatetime for CursorHold & CursorHoldI
-set updatetime=300
+set updatetime=100
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 " always show signcolumns
@@ -456,11 +457,30 @@ nmap <leader>rn <Plug>(coc-rename)
 let g:coc_snippet_next =  '<space>j'
 let g:coc_snippet_prev =  '<space>k'
 
-
 " gitgutter
-let g:gitgutter_map_keys = 0
+" forbid mapping
+" let g:gitgutter_map_keys = 0
+nmap ghs <Plug>(GitGutterStageHunk)
+nmap ghu <Plug>(GitGutterUndoHunk)
+" preview diffs
+nmap ghp <Plug>(GitGutterPreviewHunk)
+" preview location
+let g:gitgutter_preview_win_location = 'bo' 
+" jump 
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap [g <Plug>(GitGutterPrevHunk)
+" 覆盖其他sign
+let g:gitgutter_sign_allow_clobber = 1
+" signcolumn
+set signcolumn=yes
+highlight link SignColumn LineNr
+let g:gitgutter_set_sign_backgrounds = 1
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " for tagbar
+autocmd VimEnter * Tagbar
 nmap <F4> :TagbarToggle<CR>
 
 " ===========  plug config end =================================
