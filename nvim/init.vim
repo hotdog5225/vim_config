@@ -101,9 +101,9 @@ let g:python3_host_prog = '/usr/local/Cellar/python@3.8/3.8.5/bin/python3'
 let g:python_host_prog  = '/usr/bin/python2'
 " disable provider
 " To disable Python 2 support:
-"let g:loaded_python_provider = 0
+" let g:loaded_python_provider = 0
 "To disable Python 3 support:
-"let g:loaded_python3_provider = 0
+" let g:loaded_python3_provider = 0
 
 " ==================== provider end =================================
 
@@ -128,7 +128,7 @@ call plug#begin("~/.config/nvim/plugged")
     "Plug 'w0rp/ale'
     "Plug 'sheerun/vim-polyglot'
     " Code comment
-    Plug 'preservim/nerdcommenter'
+    " Plug 'preservim/nerdcommenter'
     " vim-airline
     Plug 'vim-airline/vim-airline'
     " thrift
@@ -139,7 +139,7 @@ call plug#begin("~/.config/nvim/plugged")
     "indentLine
     " Plug 'Yggdroot/indentLine'
     " rainbow 
-    Plug 'luochen1990/rainbow'
+    " Plug 'luochen1990/rainbow'
     " 代码片段提示
     Plug 'honza/vim-snippets'
     " LSP 加载
@@ -173,7 +173,7 @@ let g:NERDTreeMinimalUI = 1 " hide helper
 let g:NERDTreeIgnore = ['^node_modules$', '\.git', '\.idea'] " files/dirs to be ignored
 let g:NERDTreeStatusline = '' " set to empty to use lightline
 " " Toggle
-noremap <silent> <C-b> :NERDTreeToggle<CR>
+" noremap <silent> <C-b> :NERDTreeToggle<CR>
 nnoremap <F3> :NERDTreeToggle<CR> " 开启/关闭nerdtree快捷键
 " " Close window if NERDTree is the last one
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -364,6 +364,17 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -381,19 +392,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 " autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -418,13 +416,29 @@ nmap <leader>rn <Plug>(coc-rename)
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " jump to placehodler
-let g:coc_snippet_next =  '<space>j'
-let g:coc_snippet_prev =  '<space>k'
+"let g:coc_snippet_next =  '<space>j'
+let g:coc_snippet_next =  '<c-j>'
+"let g:coc_snippet_prev =  '<space>k'
+let g:coc_snippet_prev =  '<c-k>'
 
-" gitgutter
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd BufWritePre *.go :OR
+" set msg level
+call coc#config('coc.preferences', {
+\ 'messageLevel': 'error',
+\})
+" Add `:Format` command to format current buffer.
+"command! -nargs=0 Format :call CocAction('format')
+"autocmd BufWritePre *.go :Format
+
+
+" for gitgutter
 " forbid mapping
 " let g:gitgutter_map_keys = 0
+" stage
 nmap ghs <Plug>(GitGutterStageHunk)
+" undo
 nmap ghu <Plug>(GitGutterUndoHunk)
 " preview diffs
 nmap ghp <Plug>(GitGutterPreviewHunk)
