@@ -333,6 +333,7 @@ let g:coc_global_extensions = [
     \ 'coc-vimlsp',
     \ 'coc-snippets',
     \ 'coc-protobuf',
+    \ 'coc-explorer',
     \ 'coc-go']
 " if hidden is not set, TextEdit might fail.
 set hidden
