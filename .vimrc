@@ -56,6 +56,7 @@ nnoremap <leader>s <C-w>s
 " copy paste
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <Leader>y "+y
+vnoremap <c-c> "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
 
@@ -179,7 +180,7 @@ call plug#begin("~/.config/nvim/plugged")
     " rainbow 
     " Plug 'luochen1990/rainbow'
     " 代码片段提示
-    Plug 'honza/vim-snippets'
+    " Plug 'honza/vim-snippets'
     " LSP 加载
     " Plug 'sheerun/vim-polyglot'
     " tagbar
@@ -304,9 +305,9 @@ let g:Lf_PreviewResult = {
         \ 'Rg': 1,
         \ 'Gtags': 0
         \}
-" noremap <leader>f :LeaderfSelf<cr>
+noremap <leader>f :LeaderfSelf<cr>
 " leaderf rg 
-nnoremap <leader>fr  :Leaderf rg -e<space>
+"nnoremap <leader>fr  :Leaderf rg -e<space>
 
 " for vim-go
 " https://github.com/fatih/vim-go/issues/2760
@@ -456,10 +457,8 @@ nmap <leader>rn <Plug>(coc-rename)
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " jump to placehodler
-"let g:coc_snippet_next =  '<space>j'
-let g:coc_snippet_next =  '<c-j>'
-"let g:coc_snippet_prev =  '<space>k'
-let g:coc_snippet_prev =  '<c-k>'
+let g:coc_snippet_next =  '<space>j'
+let g:coc_snippet_prev =  '<space>k'
 
 " use `:OR` for organize import of current buffer
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
@@ -498,7 +497,7 @@ highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 " for tagbar
-autocmd VimEnter * Tagbar
+"autocmd VimEnter * Tagbar
 nmap <F4> :TagbarToggle<CR>
 
 " ===========  plug config end =================================

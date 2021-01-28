@@ -1,0 +1,33 @@
+{
+    "tsserver.trace.server": "verbose",
+    "coc.preferences.hoverTarget": "preview",
+	"coc.preferences.enableFloatHighlight": true,
+	"coc.preferences.extensionUpdateCheck": "daily",
+	"coc.preferences.messageLevel": "error",
+	"suggest.detailMaxLength": 60,
+	"suggest.noselect": true,
+	"suggest.enablePreselect": false,
+	"suggest.triggerAfterInsertEnter": true,
+	"suggest.autoTrigger": "always",
+	"suggest.timeout": 5000,
+	"suggest.enablePreview": true,
+	"suggest.floatEnable": true,
+	"suggest.detailField": "preview",
+	"suggest.snippetIndicator": "",
+	"suggest.triggerCompletionWait": 100,
+	"suggest.echodocSupport": true,
+    "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "trace.server": "verbose",
+      "initializationOptions": {
+        "usePlaceholders": false,
+        "completeUnimported": true,
+        "staticcheck": false
+      }
+    }
+  }
+}
+
