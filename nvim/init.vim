@@ -15,6 +15,9 @@ nnoremap <leader>l :wincmd l<cr>
 nnoremap <leader>v <C-w>v
 nnoremap <leader>s <C-w>s
 
+inoremap <leader>w <ESC>:w<cr>
+inoremap <leader>o <ESC>o
+
 " copy paste
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <Leader>y "+y
@@ -297,8 +300,8 @@ let g:NERDToggleCheckAllLines = 1
 let g:NERDSpaceDelims = 1
 " " Map ++ to call NERD Commenter and use iTerm key bindings 
 " " to bind Ctmd+/ to ++
-vnoremap ++ <plug>NERDCommenterToggle
-nnoremap ++ <plug>NERDCommenterToggle
+"vnoremap ++ <plug>NERDCommenterToggle
+"nnoremap ++ <plug>NERDCommenterToggle
 
 " rainbow
 let g:rainbow_active = 1
