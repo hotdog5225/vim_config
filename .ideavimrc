@@ -10,7 +10,8 @@ let mapleader=";"
 
 " copy paste
 " 设置快捷键将选中文本块复制至系统剪贴板
-vnoremap <Leader>y "+y
+vnoremap <Leader>y :action $Copy<CR>
+"vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
 
@@ -53,6 +54,8 @@ set wildmenu
 " ==================================================
 " Show all the provided actions via `:actionlist`
 " ==================================================
+" rename
+nnoremap <leader>rn :action RenameElement<CR>
 " back
 nnoremap <C-o> :action Back<CR>
 nnoremap <leader>gb :action Back<CR>
@@ -75,8 +78,8 @@ nnoremap gi :action GotoImplementation<CR>
 nnoremap su :action ShowUsages<CR>
 "nnoremap <Leader>fu :action FindUsages<CR>
 " open CodeCompletion
-nnoremap <Leader><space> a<space><ESC>:action CodeCompletion<CR>
-inoremap <Leader><space> <space><ESC>:action CodeCompletion<CR>
+" nnoremap <Leader><space> a<space><ESC>:action CodeCompletion<CR>
+" inoremap <Leader><space> <space><ESC>:action CodeCompletion<CR>
 " <C-R>
 nnoremap <C-r> :action $Redo<CR>
 
@@ -147,14 +150,17 @@ nnoremap <leader>cw :action CloseActiveTab<CR>
 " <C-j>
 inoremap <C-j> <ESC>:action InsertLiveTemplate<CR>
 
-
-
-
+" show error description
+nnoremap <leader>e :action ShowErrorDescription<cr>
+" go to previous error
+nnoremap <leader>[c :action GotoPreviousError<CR>
+" go to next error
+nnoremap <leader>]c :action GotoNextError<CR>
 
 " ==================================================
 " Emulated Vim Plugins
 " ==================================================
-set surround
+" set surround
 
 " 屏幕滚动时在光标上下方保留5行预览代码
 set so=5
