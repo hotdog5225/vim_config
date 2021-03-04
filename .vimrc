@@ -265,7 +265,6 @@ let g:WebDevIconsDefaultFileSymbolColor = s:blue
 " auro change directory
 let g:NERDTreeChDirMode = 2 
 
-
 " NERDTree Git Plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -298,14 +297,14 @@ let g:Lf_RootMarkers = ['.git', '.svn', '.hg', '.project', '.root']
 let g:Lf_DefaultExternalTool='rg'
 let g:Lf_PreviewResult = {
         \ 'File': 0,
-        \ 'Buffer': 1,
-        \ 'Mru': 1,
+        \ 'Buffer': 0,
+        \ 'Mru': 0,
         \ 'Tag': 0,
-        \ 'BufTag': 1,
-        \ 'Function': 1,
-        \ 'Line': 1,
+        \ 'BufTag': 0,
+        \ 'Function': 0,
+        \ 'Line': 0,
         \ 'Colorscheme': 0,
-        \ 'Rg': 1,
+        \ 'Rg': 0,
         \ 'Gtags': 0
         \}
 noremap <leader>f :LeaderfSelf<cr>
