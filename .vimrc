@@ -170,7 +170,7 @@ call plug#begin("~/.config/nvim/plugged")
     "Plug 'w0rp/ale'
     "Plug 'sheerun/vim-polyglot'
     " Code comment
-    " Plug 'preservim/nerdcommenter'
+    Plug 'preservim/nerdcommenter'
     " vim-airline
     Plug 'vim-airline/vim-airline'
     " thrift
@@ -342,6 +342,8 @@ let g:NERDSpaceDelims = 1
 " " to bind Ctmd+/ to ++
 "vnoremap ++ <plug>NERDCommenterToggle
 "nnoremap ++ <plug>NERDCommenterToggle
+" <leader>cc   加注释
+" <leader>cu   解开注释
 
 " rainbow
 let g:rainbow_active = 1
