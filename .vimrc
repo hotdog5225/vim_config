@@ -193,6 +193,9 @@ call plug#begin("~/.config/nvim/plugged")
 
     " always as the last one : font
     " Plug 'ryanoasis/vim-devicons'
+    
+    "自动补全单/双引号
+    Plug 'Raimondi/delimitMate'
     call plug#end()
 
 " ====================  plug end =================================
